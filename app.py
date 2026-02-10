@@ -77,7 +77,7 @@ def ticket_portal():
         "1006": "Ticket for Karthik - General entry",
         "1007": "Ticket for Priya - VIP entry",
         "1008": "Ticket for Anil - General entry",
-        "1009": "Internal staff ticket - flag: uthractf{idor_ticket_leak}",
+        "1009": "Internal staff ticket - flag: uthractf{IDOR_Leak_I$_B@S|C}",
         "1010": "Ticket for Divya - VIP entry"
     }
 
@@ -101,6 +101,7 @@ def ticket_portal():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
