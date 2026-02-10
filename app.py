@@ -117,7 +117,7 @@ def bad_token():
         )
 
         if payload.get("role") == "admin":
-            return "Welcome admin<br>Flag: uthractf{jwt_secret_is_weak}"
+            return "Welcome admin<br>Flag: uthractf{JWT_s3cr3t_|S_we@k}"
         else:
             return "Not an admin"
 
@@ -127,6 +127,7 @@ def bad_token():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
