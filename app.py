@@ -66,10 +66,8 @@ def broken_login():
 # -----------------------------
 # Challenge 10 – Ticket Portal (IDOR)
 # -----------------------------
-@app.route("/ticket")
+@app.route("/ticket", methods=["GET", "POST"])
 def ticket_portal():
-    tid = request.args.get("id", "1001")
-
     tickets = {
         "1001": "Ticket for Arun - General entry",
         "1002": "Ticket for Meera - VIP entry",
@@ -83,15 +81,27 @@ def ticket_portal():
         "1010": "Ticket for Divya - VIP entry"
     }
 
+    if request.method == "POST":
+        tid = request.form.get("id", "")
+        if tid in tickets:
+            return tickets[tid]
+        else:
+            return "Ticket not found"
 
-    if tid in tickets:
-        return tickets[tid]
-    else:
-        return "Ticket not found"
+    # Default GET request shows the form
+    return """
+    <h3>Ticket Portal</h3>
+    <form action="/ticket" method="post">
+      Ticket ID: <input name="id" value="1001"><br>
+      <button type="submit">View Ticket</button>
+    </form>
+    <p>Example input: try <b>1001</b></p>
+    """
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
