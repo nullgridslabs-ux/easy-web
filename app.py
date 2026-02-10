@@ -29,7 +29,16 @@ def lost_cookie():
         return "Welcome staff member.<br>Flag: uthractf{cookie_trust_is_bad}"
     else:
         return "Access denied. Staff only."
+@app.route("/physical-trace")
+def physical_trace():
+    return """
+    <h2>UTHRA Venue Trace</h2>
+    <p>You found the physical clue inside the venue.</p>
+    <p>Flag: uthractf{physical_trace_found}</p>
+    """
+
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
