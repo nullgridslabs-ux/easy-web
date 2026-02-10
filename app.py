@@ -36,9 +36,36 @@ def physical_trace():
     <p>You found the physical clue inside the venue.</p>
     <p>Flag: uthractf{physical_trace_found}</p>
     """
+# -----------------------------
+# Challenge 9 – Broken Login
+# -----------------------------
+@app.route("/broken-login", methods=["GET"])
+def broken_login_form():
+    return """
+    <h3>UTHRA Staff Login</h3>
+    <form action="/broken-login" method="post">
+      Username: <input name="username"><br>
+      Password: <input name="password" type="password"><br>
+      <button type="submit">Login</button>
+    </form>
+    """
+
+from flask import request
+
+@app.route("/broken-login", methods=["POST"])
+def broken_login():
+    user = request.form.get("username", "")
+    pwd = request.form.get("password", "")
+
+    # ❌ logic bug on purpose
+    if user == "admin" or pwd == "uthra2026":
+        return "Welcome staff!<br>Flag: uthractf{logic_or_login}"
+    else:
+        return "Invalid credentials"
 
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
