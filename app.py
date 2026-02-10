@@ -63,10 +63,36 @@ def broken_login():
     else:
         return "Invalid credentials"
 
+# -----------------------------
+# Challenge 10 – Ticket Portal (IDOR)
+# -----------------------------
+@app.route("/ticket")
+def ticket_portal():
+    tid = request.args.get("id", "1001")
+
+    tickets = {
+        "1001": "Ticket for Arun - General entry",
+        "1002": "Ticket for Meera - VIP entry",
+        "1003": "Internal staff ticket - placeholder",
+        "1004": "Ticket for Ravi - General entry",
+        "1005": "Ticket for Sneha - VIP entry",
+        "1006": "Ticket for Karthik - General entry",
+        "1007": "Ticket for Priya - VIP entry",
+        "1008": "Ticket for Anil - General entry",
+        "1009": "Internal staff ticket - flag: uthractf{idor_ticket_leak}",
+        "1010": "Ticket for Divya - VIP entry"
+    }
+
+
+    if tid in tickets:
+        return tickets[tid]
+    else:
+        return "Ticket not found"
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
