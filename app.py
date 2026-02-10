@@ -59,7 +59,7 @@ def broken_login():
 
     # ❌ logic bug on purpose
     if user == "admin" or pwd == "uthra2026":
-        return "Welcome staff!<br>Flag: uthractf{logic_or_login}"
+        return "Welcome staff!<br>Flag: uthractf{L0G1C_0R_L0G1N}"
     else:
         return "Invalid credentials"
 
@@ -67,5 +67,6 @@ def broken_login():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
