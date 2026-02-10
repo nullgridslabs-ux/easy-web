@@ -1,4 +1,6 @@
 from flask import Flask, request, make_response
+import jwt
+
 
 app = Flask(__name__)
 
@@ -97,10 +99,35 @@ def ticket_portal():
     </form>
     <p>Example input: try <b>1001</b></p>
     """
+# -----------------------------
+# Challenge 13 – Bad Token
+# -----------------------------
+@app.route("/bad-token")
+def bad_token():
+    token = request.args.get("token")
+
+    if not token:
+        return "Provide token as ?token="
+
+    try:
+        payload = jwt.decode(
+            token,
+            "uthra_secret",      # intentionally weak
+            algorithms=["HS256"]
+        )
+
+        if payload.get("role") == "admin":
+            return "Welcome admin<br>Flag: uthractf{jwt_secret_is_weak}"
+        else:
+            return "Not an admin"
+
+    except Exception as e:
+        return "Invalid token"
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
