@@ -171,20 +171,30 @@ def staff_panel_admin():
         # misleading response on purpose
         return "404 - page not found"
 
-@app.route("/ghost-trail-tn")
+@app.route("/ghost-trail-tn", methods=["GET", "POST"])
 def ghost_trail_tn():
-    code = request.args.get("code", "").upper()
+    if request.method == "POST":
+        code = request.form.get("code", "").strip().upper()
 
-    # HQ city of K7 Computing is Chennai
-    # IATA airport code of Chennai is MAA
-    if code == "MAA":
-        return "Recovered trace:<br>uthractf{TN_Cyb3r_gh0st_trail}"
-    else:
-        return "No matching trace found."
+        if code == "MAA":
+            return "Recovered trace:<br>uthractf{tn_cyber_ghost_trail}"
+        else:
+            return "No matching trace found."
+
+    # GET request – show simple form
+    return """
+    <h3>Ghost Trail Investigation</h3>
+    <form method="post">
+        Enter airport code:
+        <input type="text" name="code" required>
+        <input type="submit" value="Submit">
+    </form>
+    """
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
