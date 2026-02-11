@@ -235,9 +235,27 @@ def final_incident():
         return "Access denied."
 
     return "Incident fully reconstructed.<br>uthractf{Uthra-Br3Ach_C0mpl3t3d}"
+@app.route("/_int/<path:res>")
+def internal_router(res):
+
+    if res != "core/auth/session.py":
+        return "Not found", 404
+
+    if request.args.get("debug") == "trace":
+        return """
+Traceback (most recent call last):
+  File "/srv/app/core/auth/session.py", line 87, in load_session
+    raise Exception("session corrupt")
+
+Internal secret:
+uthractf{Uthra_Br3AcH<>_St0993d}
+"""
+    return "Forbidden", 403
+    
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
