@@ -25,18 +25,28 @@ def open_gate_debug():
 # -----------------------------
 # Challenge 2 – Lost Cookie
 # -----------------------------
-@app.route("/set-cookie")
-def set_cookie():
-    resp = make_response("Cookie has been set. Now visit /lost-cookie")
-    resp.set_cookie("staff", "true")
-    return resp
-
-@app.route("/set-cookie/lost-cookie")
-def lost_cookie():
-    if request.cookies.get("staff") == "true":
-        return "Welcome staff member.<br>Flag: uthractf{cookie_trust_is_bad}"
+@app.route("/lost-cookies")
+def lostcookies():
+    # Normal-looking student info page
+    resp = make_response("""
+        <h1>Uthra Student Information</h1>
+        <p>This portal contains details and resources for students of Uthra.</p>
+        <p>Students can view announcements, schedules, and updates here.</p>
+    """)
+    # Set a cookie named "role" with value "student"
+    resp.set_cookie("role", "student")
+    
+    # Check cookie value
+    if request.cookies.get("role") == "staff":
+        return """
+            <h2>Welcome staff member</h2>
+            <p>Flag: uthractf{cookie_trust_is_bad}</p>
+            <p>Staff have access to confidential information.</p>
+        """
     else:
-        return "Access denied. Staff only."
+        return resp
+
+
 
 @app.route("/physical-trace")
 def physical_trace():
@@ -134,6 +144,7 @@ def bad_token():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
