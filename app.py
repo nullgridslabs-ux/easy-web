@@ -166,13 +166,14 @@ def staff_panel_admin():
     expected = base64.b64encode(b"true").decode()
 
     if header_val == expected and cookie_val == "shadow_access":
-        return "Admin function unlocked.<br>Flag: uthractf{shadowed_multi_condition}"
+        return "Admin function unlocked.<br>Flag: uthractf{S#aD0W3D_$t@FF_P@n3L}"
     else:
         # misleading response on purpose
         return "404 - page not found"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
