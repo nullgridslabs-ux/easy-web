@@ -171,8 +171,21 @@ def staff_panel_admin():
         # misleading response on purpose
         return "404 - page not found"
 
+@app.route("/ghost-trail-tn")
+def ghost_trail_tn():
+    code = request.args.get("code", "").upper()
+
+    # HQ city of K7 Computing is Chennai
+    # IATA airport code of Chennai is MAA
+    if code == "MAA":
+        return "Recovered trace:<br>uthractf{TN_Cyb3r_gh0st_trail}"
+    else:
+        return "No matching trace found."
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
