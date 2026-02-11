@@ -190,18 +190,26 @@ def ghost_trail_tn():
         <input type="text" name="code" required>
         <input type="submit" value="Submit">
     </form>
-    """
-@app.route("/final-incident", methods=["GET"])
+    """@app.route("/final-incident", methods=["GET"])
 def final_incident():
 
-    token = request.headers.get("Authorization", "")
-    internal = request.headers.get("X-Uthra-Internal", "")
-    cookie = request.cookies.get("uthra_auth", "")
-    secret = request.args.get("secret", "")
+    token = request.headers.get("Authorization")
+    internal = request.headers.get("X-Uthra-Internal")
+    cookie = request.cookies.get("uthra_auth")
+    secret = request.args.get("secret")
+
+    # If someone just opens the page normally, show an intro page
+    if not token and not internal and not cookie and not secret:
+        return """
+        <h2>UTHRA – Internal Incident Endpoint</h2>
+        <p>This endpoint is used by the internal investigation system.</p>
+        <p>A reconstructed administrative request is required to access it.</p>
+        <p>Refer to the recovered artefacts to rebuild the request.</p>
+        """
 
     # ---- check 1 : forged admin JWT (from challenge 13)
     try:
-        if not token.startswith("Bearer "):
+        if not token or not token.startswith("Bearer "):
             return "Access denied."
 
         jwt_token = token.replace("Bearer ", "")
@@ -225,9 +233,10 @@ def final_incident():
     if secret != "UTHRA-IR-2026":
         return "Access denied."
 
-    return "Incident fully reconstructed.<br>uthractf{Ut#R@_Br3ach_C0mPl3t3d}"
+    return "Incident fully reconstructed.<br>uthractf{uthra_breach_mastered}"
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
