@@ -190,7 +190,8 @@ def ghost_trail_tn():
         <input type="text" name="code" required>
         <input type="submit" value="Submit">
     </form>
-    """@app.route("/final-incident", methods=["GET"])
+"""
+@app.route("/final-incident", methods=["GET"])
 def final_incident():
 
     token = request.headers.get("Authorization")
@@ -233,9 +234,11 @@ def final_incident():
     if secret != "UTHRA-IR-2026":
         return "Access denied."
 
-    return "Incident fully reconstructed.<br>uthractf{uthra_breach_mastered}"
+    return "Incident fully reconstructed.<br>uthractf{Uthra-Br3Ach_C0mpl3t3d}"
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
