@@ -191,11 +191,6 @@ def ghost_trail_tn():
         <input type="submit" value="Submit">
     </form>
     """
-
-import jwt
-import base64
-from flask import request
-
 @app.route("/final-incident", methods=["GET"])
 def final_incident():
 
@@ -204,7 +199,7 @@ def final_incident():
     cookie = request.cookies.get("uthra_auth", "")
     secret = request.args.get("secret", "")
 
-    # ---- check 1 : JWT from challenge 13
+    # ---- check 1 : forged admin JWT (from challenge 13)
     try:
         if not token.startswith("Bearer "):
             return "Access denied."
@@ -217,7 +212,7 @@ def final_incident():
     except:
         return "Access denied."
 
-    # ---- check 2 : Admin Shadow hard conditions (challenge 16)
+    # ---- check 2 : Admin Shadow (hard)
     expected_header = base64.b64encode(b"true").decode()
 
     if internal != expected_header:
@@ -226,16 +221,14 @@ def final_incident():
     if cookie != "shadow_access":
         return "Access denied."
 
-    # ---- check 3 : modern crypto output (challenge 18)
-    # this must match the recovered secret from Twisted Cipher
+    # ---- check 3 : secret from challenge 18
     if secret != "UTHRA-IR-2026":
         return "Access denied."
 
-    return "Incident fully reconstructed.<br>uthractf{UThR@_BR3@CH_Ma$T3r3d}"
-
-
+    return "Incident fully reconstructed.<br>uthractf{Ut#R@_Br3ach_C0mPl3t3d}"
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
