@@ -177,7 +177,7 @@ def ghost_trail_tn():
         code = request.form.get("code", "").strip().upper()
 
         if code == "MAA":
-            return "Recovered trace:<br>uthractf{tn_cyber_ghost_trail}"
+            return "Recovered trace:<br>uthractf{TN_tr@c3_f0und_h@#d}"
         else:
             return "No matching trace found."
 
@@ -194,6 +194,7 @@ def ghost_trail_tn():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
