@@ -140,10 +140,40 @@ def bad_token():
 
     except Exception as e:
         return "Invalid token"
+        
+# -----------------------------
+# Challenge 16 – Admin Shadow (HARD)
+# -----------------------------
+@app.route("/staff-panel")
+def staff_panel():
+    return """
+    <h3>UTHRA Staff Panel</h3>
+    <p>Restricted internal interface.</p>
 
+    <!--
+    internal proxy note:
+    X-Uthra-Internal must be base64(true)
+    auth cookie name: uthra_auth
+    -->
+    """
+
+@app.route("/staff-panel/admin")
+def staff_panel_admin():
+
+    header_val = request.headers.get("X-Uthra-Internal")
+    cookie_val = request.cookies.get("uthra_auth")
+
+    expected = base64.b64encode(b"true").decode()
+
+    if header_val == expected and cookie_val == "shadow_access":
+        return "Admin function unlocked.<br>Flag: uthractf{shadowed_multi_condition}"
+    else:
+        # misleading response on purpose
+        return "404 - page not found"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
